@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        #Home{
+            background-color: rgb(230, 245, 241);
+            margin: 50px;
+            padding-bottom: 150px;
+            text-align: center;
+        }
+
+
+        .Home_header_title{
+            font-size: 80px;
+            color: white;
+            background-color: rgb(255, 140, 0);
+        }
+
+        .Home_buttons{
+            margin-top: 100px;
+        }
+        .Home_button{
+            background-color: blue;
+            color: aliceblue;
+            font-size: 30px;
+            min-width: 400px;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+
+        .Home_button:hover{
+            opacity: 0.7;
+        }
+
+        .measure_force_header_title{
+            font-size: 50px;
+            background-color: bisque;
+        }
+
+
+        .Measure_Result{
+            margin-top: 40px;
+            background-color: rgb(209, 251, 230);
+            font-size: 25px;
+            color: rgb(23, 0, 0);
+            float: right;
+            width: 25%;
+            padding-bottom: 70px;
+            padding-top: 10px;
+        }
+
+        .Measure_Result_Display{
+            text-align: left;
+            font-size: 20px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+        .Measure_Weight_Device{
+        
+            position: absolute;
+            right: 5%;
+            top: 50%;
+
+        }
+        
+
+        .Measure_Parameter{
+            clear: both;
+            margin: 40px 450px 0px 450px;
+            padding: 10px 0px 50px 0px;
+            background-color: rgb(243, 244, 219);
+            color: rgb(21, 5, 5);
+        }
+
+        #Measure_Parameter_Input{
+            margin-top: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .Measure_Parameter_Button{
+            margin-top: 15px;
+            text-align: center;
+            font-size: 20px;
+            padding: 5px;
+            color: white;
+            background-color: green;
+            border-radius: 20px;
+            border-style: solid;
+            cursor: pointer;
+        }
+
+        .Measure_Parameter_Button:hover{
+            opacity: 0.7;
+        }
+
+
+        .Config_WIFI_title{
+            margin-top: 5%;
+            font-size: 300%;
+            color: rgb(51, 31, 4);
+        }
+
+        .Config_WIFI_input{
+            position: absolute;
+            border: 3px solid rgba(20, 20, 20, 0.092);
+            background-color: white;
+            left: 25%;
+            right: 25%;
+            top: 25%;
+            
+        }
+
+        #Config_WIFI_input_ssid{
+            border-color: blue;
+            border-width: 3%;
+            margin: 15% 0px 5% 0px;
+            font-size: 120%;
+        }
+        #Config_WIFI_input_pass{
+            border-color: blue;
+            border-width: 3%;
+            margin-bottom: 5%;
+            font-size: 120%;
+        }
+         .Config_WIFI_input_submit{
+            margin-bottom: 15%;
+            font-size: 120%;
+            background-color:blue;
+            color: white;
+            border-color: black;
+            border-radius: 2%;
+            border-width: 4%;
+            cursor: pointer;
+         }
+         .Config_WIFI_input_submit:hover{
+            opacity: 0.7;
+         }
+
+         .Config_WIFI_Back{
+            position: absolute;
+            cursor: pointer;
+            background-color: rgb(0, 81, 255);
+            color: white;
+            font-size: 20px;
+            bottom: 3%;
+            left: 3%;
+            border-width: 5%;
+         }
+         .Config_WIFI_Back:hover{
+            opacity: 0.7;
+         }
+         .Config_WIFI_loading{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.201);
+         }
+
+         .Check_Connect{
+            position: absolute;
+            background-color: rgb(13, 117, 13);
+            color: white;
+            font-size: 20px;
+            left: 35%;
+            right: 35%;
+            bottom: 30%;
+            cursor: pointer; 
+            border-width: 5px;
+         }
+
+         .Check_Connect:hover{
+            opacity: 0.7;
+         }
+
+         .Back_Buttuon{
+            margin-top: 15px;
+            font-size: 20px;
+            color: white;
+            background-color: red;
+            cursor: pointer;
+         }
+         .Back_Buttuon:hover{
+            opacity: 0.7;
+         }
+        
+
+    </style>
+    <head>
+        <meta charset="UTF-8">
+        <title> Thí Nghiệm Động Lực Học</title>
+    </head>
+
+    <body>
+        <div id="Home">
+            <div class="Home_header_title">Trang Chủ</div>
+            <div class="Home_buttons">
+                <div><button class="Home_button" onclick="Configure_WiFi_Func()">Cài Đặt WiFi</button></div>
+                <div><button class="Home_button" onclick="Check_Connect()">Kết Nối Thiết Bị</button></div>
+                <div><button class="Home_button" onclick="Measure_Force_Func()">Thí Nghiệm</button></div>
+            </div>
+        </div>
+        <div id="measure_force" style="text-align: center;">
+            <div class="measure_force_header_title">Thí Nghiệm</div>
+            <div class="measure_force_body">
+                <div class="Measuare_Chart" style="width: 75%; float: left; margin-top: 30px;" >
+                    <canvas id="myChart" height="100"></canvas>
+                </div>
+                <div class="Measure_Result">
+                    <div class="Measure_Result_Title">Kết quả</div>
+                    <div class="Measure_Result_Display">Lực Kéo: <span id="Measure_Result_Display_Force"></span> N</div>
+                    <div class="Measure_Result_Display">Gia Tốc: <span id="Measure_Result_Display_Accelerometer"> m/s2</span></div>
+                </div>
+                <div class="Measure_Weight_Device">
+                </div>
+                <div class="Measure_Parameter">
+                    <div >
+                    </div>
+                    <div>
+                        <button class="Measure_Parameter_Button" onclick="Start_Measure()">Bắt Đầu</button>
+                    </div>
+                    <div>
+                        <button class="Back_Buttuon" onclick="Back_Button()">Quay Lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Config_WIFI" style="text-align: center;">
+            <div class="Config_WIFI_title">ĐĂNG NHẬP WiFi</div>
+            <div class="Config_WIFI_input">
+                <div><input type="text" placeholder="Tên Đăng Nhập" id="Config_WIFI_input_ssid"></div>
+                <div><input type="text" placeholder="Mật Khẩu" id="Config_WIFI_input_pass"></div>
+                <div>
+                    <button onclick="Push_ssid_pass()" class="Config_WIFI_input_submit">Đăng Nhập</button>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="Back_Home_Func()" class="Config_WIFI_Back">HOME</button>
+            </div>
+            </div>
+        </div>
+        <div class="Config_WIFI_loading" id="loading"></div>
+    </body>
+</html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<Script>
+var merchandise_weight =0;
+var Device_Weight =0;
+var position_flag =0;
+var string_push ="";
+var xhr = new XMLHttpRequest();
+var xhr2 = new XMLHttpRequest();
+window.onload = function()
+{
+    document.getElementById("Home").style.display = "block";
+    document.getElementById("measure_force").style.display = "none";
+    document.getElementById("Config_WIFI").style.display = "none";
+    loading_off();
+}
+
+function Configure_WiFi_Func(){
+    document.getElementById("Home").style.display = "none";
+    document.getElementById("measure_force").style.display = "none";
+    document.getElementById("Config_WIFI").style.display = "block";
+    document.getElementById("loading").style.display = "none"
+}
+
+function Back_Home_Func()
+{
+    document.getElementById("Home").style.display = "block";
+    document.getElementById("measure_force").style.display = "none";
+    document.getElementById("Config_WIFI").style.display = "none";
+}
+
+function loading_on()
+{
+    document.getElementById("loading").style.display = "block"
+}
+
+function loading_off()
+{
+    document.getElementById("loading").style.display = "none"
+}
+
+
+function Check_Connect()
+{
+    xhr.open("POST","http://myesp32.local/checkconnect");
+    xhr.send();
+    loading_on();
+    setTimeout(function(){loading_off();},3000);
+}
+
+function Back_Button()
+{
+    if (position_flag == 1)
+    {
+        position_flag =0;
+        xhr.open("POST","http://myesp32.local/back");
+        xhr.send();
+        loading_on();
+        setTimeout(function()
+        {
+            loading_off();
+        },5000);
+    }
+    else
+    {
+        alert("Xe Chưa Ở Vị Trí Cuối");
+    }
+}
+
+function Push_ssid_pass()
+{
+    var ssid = document.getElementById("Config_WIFI_input_ssid").value;
+    var pass = document.getElementById("Config_WIFI_input_pass").value;
+    if(ssid == "")
+    {
+        alert("Tài khoản không hợp lệ");
+    }
+    else
+    {
+        string_push = "ssid:"+ssid+"pass:"+pass+"end@";
+        xhr.open("POST","http://myesp32.local/configwifi");
+        xhr.send(string_push);
+        setTimeout(function(){
+        xhr2.open("POST","/configwifi");
+        xhr2.send(string_push);},6000);
+    }
+
+
+}
+
+function Configure_Device_Func(){
+
+}
+
+function Measure_Force_Func(){
+    document.getElementById("Home").style.display = "none";
+    document.getElementById("measure_force").style.display = "block";
+}
+
+function Measure_Handler()
+{
+    if (xhr.readyState == XMLHttpRequest.DONE)
+    {
+        var Data = xhr.responseText;
+        const obj_data = JSON.parse(Data);
+        var accelerometer_data = obj_data.a;
+        var force_data = obj_data.f;
+        document.getElementById("Measure_Result_Display_Force").innerHTML = force_data;
+        document.getElementById("Measure_Result_Display_Accelerometer").innerHTML = accelerometer_data;
+        myChart.data.datasets[0].data.push(accelerometer_data);
+        myChart.data.labels.push(force_data);
+        myChart.update();
+    }
+}
+
+function Start_Measure()
+{
+    xhr.open("GET","/start_measure");
+    xhr.send();
+    loading_on();
+    setTimeout(function()
+    {
+        loading_off();
+        position_flag =1;
+        xhr2.open("POST","http://myesp32.local/start");
+        xhr2.send();
+        setTimeout(function(){
+            xhr.onreadystatechange = Measure_Handler;
+            xhr.open("GET","/getvalue");
+            xhr.send();
+        },5000);
+    },1000);
+}
+
+
+</Script>
+
+<Script>
+const data ={
+    labels: [0],
+    datasets: [{
+      label: 'GIA TỐC',
+      data: [0],
+      borderWidth: 1
+    }]
+  };
+
+const config = {
+    type: 'line',
+    data,
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+        
+  }
+}
+
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+);
+
+</Script>
+
+
